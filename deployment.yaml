@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-app
+  template:
+    metadata:
+      labels:
+        app: blog-app
+    spec:
+      containers:
+      - name: blog-app
+        image: thanushdev01/blog-app:latest   # <-- Use your Docker Hub image
+        imagePullPolicy: Always                # <-- Pull latest from Docker Hub
+        ports:
+        - containerPort: 8081                  # <-- Keep 8081 only if your app runs on this port
