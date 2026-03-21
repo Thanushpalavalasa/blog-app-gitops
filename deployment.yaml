@@ -3,10 +3,19 @@ kind: Deployment
 metadata:
   name: blog-app
 spec:
-  replicas: 1   # optional (HPA will override)
+  replicas: 1   # HPA will override this
+  revisionHistoryLimit: 2   # ✅ KEEP ONLY 2 REPLICASETS
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
   selector:
     matchLabels:
       app: blog-app
+
   template:
     metadata:
       labels:
@@ -14,13 +23,13 @@ spec:
     spec:
       containers:
       - name: blog-app
-        image: thanushdev01/blog-app:473675e9111397ade54c6ca84d43c20f455c27b5
+        image: thanushdev01/blog-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
         resources:
           requests:
-            cpu: "100m"        # ✅ REQUIRED for HPA
+            cpu: "100m"
             memory: "128Mi"
           limits:
             cpu: "500m"
