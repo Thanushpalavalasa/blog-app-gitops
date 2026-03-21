@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: blog-app
 spec:
-  replicas: 1
+  replicas: 1   # optional (HPA will override)
   selector:
     matchLabels:
       app: blog-app
@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
       - name: blog-app
-        image: thanushdev01/blog-app:latest   # <-- Use your Docker Hub image
-        imagePullPolicy: Always                # <-- Pull latest from Docker Hub
+        image: thanushdev01/blog-app:latest
+        imagePullPolicy: Always
         ports:
-        - containerPort: 8081                  # <-- Keep 8081 only if your app runs on this port
+        - containerPort: 8081
+        resources:
+          requests:
+            cpu: "100m"        # ✅ REQUIRED for HPA
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
