@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: blog-app
-        image: thanushdev01/blog-app:e9a5d431cdc52c2113474575d8442c300ded8c54
+        image: thanushdev01/blog-app:054135891f5431dacdd119b690fee1eddbc29e4a
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
